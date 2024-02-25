@@ -7,7 +7,8 @@ import Footer from "@/components/other/footer";
 import Header from "@/components/other/header";
 import Maintenance from "@/components/other/maintenance";
 
-const inter = Rubik({ subsets: ["latin"] });
+const rubik = Rubik({ subsets: ["latin"] });
+
 async function fetchConfig() {
   const options = {
     headers: {
@@ -57,8 +58,7 @@ export default function RootLayout({
         <meta httpEquiv="expires" content="Sat, 01 Jan 2000 1:00:00 GMT" />
         <meta httpEquiv="pragma" content="no-cache" />
       </head>
-      <body className={`${inter.className} bg-shadn3`}>
-        <Maintenance>
+      <body className={`${rubik.className} bg-shadn3`}>
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
@@ -77,7 +77,6 @@ export default function RootLayout({
             </div>
             <Toaster />
           </ThemeProvider>
-        </Maintenance>
       </body>
     </html>
   );

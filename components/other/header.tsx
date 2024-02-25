@@ -5,7 +5,7 @@ import Navbar from "@/components/other/navbar";
 import Image from "next/image";
 import { config } from "process";
 
-export async function getStaticProps() {
+export async function fetchConfig() {
   const options = {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
@@ -33,7 +33,7 @@ export async function getStaticProps() {
 }
 
 const Header = async () => {
-  const { configData } = await getStaticProps();
+  const { configData } = await fetchConfig();
   return (
     <div className="relative">
       <div className="absolute inset-0 bg-shadn3"></div>
