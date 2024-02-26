@@ -97,7 +97,7 @@ const BlogPage = async ({ params }: any) => {
             <span className="ml-1">back</span>
           </Link>
         </div>
-        <div className="items-end">
+        <div className="items-end text-end">
         {blog.data.attributes.categories.data.map((category: any) => (
               <React.Fragment key={category.id}>
                 <Link href={`/categories/${category.id}`}>
