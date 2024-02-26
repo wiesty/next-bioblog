@@ -8,19 +8,18 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation"
 
 async function fetchBlog(id: number) {
-  const options = {
+  const headers = {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-    },
-    cache: "no-store",
+    }
   };
 
   try {
     const res = await fetch(
       `${process.env.CMS_URL}/api/blogs/${id}?populate=*`,
       {
-        ...options,
-        cache: "no-store" as RequestCache,
+        ...headers,
+        next: { tags: ['collection'] }
       }
     );
     const response = await res.json();
@@ -29,17 +28,16 @@ async function fetchBlog(id: number) {
 }
 
 async function fetchConfig() {
-  const options = {
+  const headers = {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
     },
-    cache: "no-store",
   };
 
   try {
     const res = await fetch(`${process.env.CMS_URL}/api/cmsconfig`, {
-      ...options,
-      cache: "no-store" as RequestCache,
+      ...headers,
+      next: { tags: ['collection'] }
     });
     const response = await res.json();
     return response;
@@ -76,6 +74,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
     }
   }
 }
+
 
 const BlogPage = async ({ params }: any) => {
   const blog = await fetchBlog(params.id);

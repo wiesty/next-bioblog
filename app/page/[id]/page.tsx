@@ -18,7 +18,7 @@ async function fetchPage(id: number) {
       `${process.env.CMS_URL}/api/pages/${id}?populate=*`,
       {
         ...options,
-        cache: 'no-store' as RequestCache,
+        cache: 'no-store',
       }
     );
     const response = await res.json();

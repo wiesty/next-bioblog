@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/tooltip";
 
 export async function getStaticProps() {
-  const options = {
+  const headers = {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
     },
@@ -21,11 +21,14 @@ export async function getStaticProps() {
       fetch(
         `${process.env.CMS_URL}/api/menus/${process.env.FooterMenuId}?populate=*`,
         {
-          ...options,
-          cache: "no-store" as RequestCache,
+          ...headers,
+          next: { tags: ['collection'] }
         }
       ),
-      fetch(`${process.env.CMS_URL}/api/cmsconfig?populate=*`, options),
+      fetch(`${process.env.CMS_URL}/api/cmsconfig?populate=*`, {
+        ...headers,
+        next: { tags: ['collection'] }
+      }),
     ]);
 
     const [menuData, configData] = await Promise.all([

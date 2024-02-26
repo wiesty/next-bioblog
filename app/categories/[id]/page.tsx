@@ -6,19 +6,18 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 async function fetchBlogs(id: number) {
-  const options = {
+  const headers = {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
     },
-    cache: "no-store",
   };
 
   try {
     const res = await fetch(
       `${process.env.CMS_URL}/api/blogs?filters[categories]=${id}&populate=*`,
       {
-        ...options,
-        cache: "no-store" as RequestCache,
+        ...headers,
+        next: { tags: ['collection'] }
       }
     );
     const response = await res.json();
@@ -27,17 +26,16 @@ async function fetchBlogs(id: number) {
 }
 
 async function fetchCategoryName(id: number) {
-  const options = {
+  const headers = {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
     },
-    cache: "no-store",
   };
 
   try {
     const res = await fetch(`${process.env.CMS_URL}/api/categories/${id}`, {
-      ...options,
-      cache: "no-store" as RequestCache,
+      ...headers,
+      next: { tags: ['collection'] }
     });
     const response = await res.json();
     return response;

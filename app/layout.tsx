@@ -10,17 +10,16 @@ import Maintenance from "@/components/other/maintenance";
 const rubik = Rubik({ subsets: ["latin"] });
 
 async function fetchConfig() {
-  const options = {
+  const headers = {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
     },
-    cache: "no-store",
   };
 
   try {
     const res = await fetch(`${process.env.CMS_URL}/api/cmsconfig`, {
-      ...options,
-      cache: "no-store" as RequestCache,
+      ...headers,
+      next: { tags: ["collection"] },
     });
     const response = await res.json();
     return response;
@@ -35,8 +34,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
       title: config.data.attributes.BlogTitle,
       description: config.data.attributes.MetaDesc,
     };
-  }
-  else {
+  } else {
     return {
       title: config.data.attributes.BlogTitle,
       description: config.data.attributes.MetaDesc,
@@ -59,11 +57,12 @@ export default function RootLayout({
         <meta httpEquiv="pragma" content="no-cache" />
       </head>
       <body className={`${rubik.className} bg-shadn3`}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            disableTransitionOnChange
-          >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          disableTransitionOnChange
+        >
+          <Maintenance>
             <div className="min-h-screen bg-shadn p-4">
               <div className="max-w-6xl mx-auto">
                 <div className="bg-shadn2 rounded-lg shadow-lg overflow-hidden">
@@ -76,7 +75,8 @@ export default function RootLayout({
               </div>
             </div>
             <Toaster />
-          </ThemeProvider>
+          </Maintenance>
+        </ThemeProvider>
       </body>
     </html>
   );

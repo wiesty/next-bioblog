@@ -6,7 +6,7 @@ import Image from "next/image";
 import { config } from "process";
 
 export async function fetchConfig() {
-  const options = {
+  const headers = {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
     },
@@ -15,8 +15,8 @@ export async function fetchConfig() {
   try {
     const [configRes] = await Promise.all([
       fetch(`${process.env.CMS_URL}/api/cmsconfig?populate=*`, {
-        ...options,
-        cache: "no-store" as RequestCache,
+        ...headers,
+        next: { tags: ['collection'] }
       }),
     ]);
 
