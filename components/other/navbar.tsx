@@ -10,8 +10,8 @@ import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
 import { NavbarClient } from "./navbarclient";
 
-export async function getStaticProps() {
-  const options = {
+export async function fetchMenu() {
+  const headers = {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
     },
@@ -22,8 +22,8 @@ export async function getStaticProps() {
       fetch(
         `${process.env.CMS_URL}/api/menus/${process.env.HeaderMenuId}?populate=*`,
         {
-          ...options,
-          cache: "no-store" as RequestCache,
+          ...headers,
+          next: { tags: ['collection'] }
         }
       ),
     ]);
@@ -43,7 +43,7 @@ export async function getStaticProps() {
 }
 
 const Navbar = async () => {
-  const { menuData } = await getStaticProps();
+  const { menuData } = await fetchMenu();
 
   return (
     <Menubar>

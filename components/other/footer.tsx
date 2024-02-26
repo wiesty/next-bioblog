@@ -9,7 +9,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export async function getStaticProps() {
+export async function fetchMenu() {
   const headers = {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
@@ -50,7 +50,7 @@ export async function getStaticProps() {
 }
 
 const Footer = async () => {
-  const { menuData, configData } = await getStaticProps();
+  const { menuData, configData } = await fetchMenu();
   return (
     <div>
       <footer className="bg-shadn3 mt-8 p-4 text-white text-center">

@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Footer from "@/components/other/footer";
 import Header from "@/components/other/header";
 import Maintenance from "@/components/other/maintenance";
+import RightClick from "@/components/other/rightclick";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
@@ -63,18 +64,22 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Maintenance>
-            <div className="min-h-screen bg-shadn p-4">
-              <div className="max-w-6xl mx-auto">
-                <div className="bg-shadn2 rounded-lg shadow-lg overflow-hidden">
-                  <Header />
-                  <div className="flex justify-center mt-8">
-                    <div className="w-full max-w-screen-lg p-4">{children}</div>
+            <RightClick>
+              <div className="min-h-screen bg-shadn p-4">
+                <div className="max-w-6xl mx-auto">
+                  <div className="bg-shadn2 rounded-lg shadow-lg overflow-hidden">
+                    <Header />
+                    <div className="flex justify-center mt-8">
+                      <div className="w-full max-w-screen-lg p-4">
+                        {children}
+                      </div>
+                    </div>
+                    <Footer />
                   </div>
-                  <Footer />
                 </div>
               </div>
-            </div>
-            <Toaster />
+              <Toaster />
+            </RightClick>
           </Maintenance>
         </ThemeProvider>
       </body>

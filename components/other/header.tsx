@@ -49,10 +49,10 @@ const Header = async () => {
             alt="avatar"
             src={`${process.env.CMS_URL}${configData.data.attributes.BlogAvatar.data.attributes.url}`}
           />
-          <h1 className="text-2xl font-semibold text-gray-100 mt-4">
+          <h1 className="text-2xl font-semibold text-primary mt-4">
             {configData.data.attributes.BlogTitle}
           </h1>
-          <p className="text-gray-100">
+          <p className="text-gray-200">
             {configData.data.attributes.BlogDescSecondary}
           </p>
           <p className="text-gray-400 mt-2">

@@ -20,19 +20,18 @@ async function fetchConfig() {
 }
 
 async function fetchBlogs() {
-  const options = {
+  const headers = {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
     },
-    cache: 'no-store',
   };
 
   try {
     const res = await fetch(
       `${process.env.CMS_URL}/api/blogs?populate=*`,
       {
-        ...options,
-        cache: 'no-store' as RequestCache,
+        ...headers,
+        next: { tags: ['collection'] }
       }
     );
     const response = await res.json();
