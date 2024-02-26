@@ -43,17 +43,16 @@ async function fetchCategoryName(id: number) {
 }
 
 async function fetchConfig() {
-  const options = {
+  const headers = {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
     },
-    cache: "no-store",
   };
 
   try {
-    const res = await fetch(`${process.env.CMS_URL}/api/cmsconfig`, {
-      ...options,
-      cache: "no-store" as RequestCache,
+    const res = await fetch(`${process.env.CMS_URL}/api/cmsconfig?populate=*`, {
+      ...headers,
+      next: { tags: ['collection'] }
     });
     const response = await res.json();
     return response;
@@ -87,6 +86,7 @@ export async function generateMetadata({ params }: any): Promise<Metadata> {
 }
 const categoriesPage = async ({ params }: any) => {
   const blogs = await fetchBlogs(params.id);
+  const config = await fetchConfig();
   const category = await fetchCategoryName(params.id);
 
   if (blogs.data === null || category.data === null) {
@@ -109,7 +109,7 @@ const categoriesPage = async ({ params }: any) => {
         </div>
       </div>
       <div>
-        <Blogs blogs={blogs} />
+      <Blogs blogs={blogs} config={config} />
       </div>
     </div>
   );

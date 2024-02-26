@@ -11,17 +11,15 @@ import {
 } from "@/components/ui/card";
 
 const BlogCard = ({ blog, config }: any) => {
-
   const truncateBlogDesc =
     blog.attributes.Description.length > 50
       ? blog.attributes.Description.substring(0, 50) + "..."
       : blog.attributes.Description;
 
-
-    let imageUrl = !(blog.attributes.img.data === null)
-      ? config.data.attributes.StrapiUrl + blog.attributes.img.data
-      :  config.data.attributes.StrapiUrl +
-        config.data.attributes.DefaultBlogImage.data.attributes.url;
+  let imageUrl = !(blog.attributes.img.data === null)
+    ? config.data.attributes.StrapiUrl + blog.attributes.img.data
+    : config.data.attributes.StrapiUrl +
+      config.data.attributes.DefaultBlogImage.data.attributes.url;
 
   return (
     <Card>
