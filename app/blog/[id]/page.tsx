@@ -101,7 +101,7 @@ const BlogPage = async ({ params }: any) => {
         {blog.data.attributes.categories.data.map((category: any) => (
               <React.Fragment key={category.id}>
                 <Link href={`/categories/${category.id}`}>
-                  <Badge variant="secondary">{category.attributes.Title}</Badge>{" "}
+                  <Badge variant="destructive">{category.attributes.Title}</Badge>{" "}
                 </Link>
               </React.Fragment>
             ))}
@@ -120,7 +120,7 @@ const BlogPage = async ({ params }: any) => {
           </div>
         )}
         <div className="mt-8">
-          <h1 className="text-3xl font-semibold">
+          <h1 className="text-3xl font-semibold text-primary">
             {blog.data.attributes.Title}
           </h1>
           <p className="text-gray-600 mt-6">

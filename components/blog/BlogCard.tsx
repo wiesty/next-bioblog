@@ -27,7 +27,7 @@ const BlogCard = ({ blog, config }: any) => {
           {blog.attributes.categories.data.map((category: any) => (
             <React.Fragment key={category.id}>
               <Link href={`/categories/${category.id}`}>
-                <Badge variant="secondary">{category.attributes.Title}</Badge>{" "}
+                <Badge variant="destructive">{category.attributes.Title}</Badge>{" "}
               </Link>
             </React.Fragment>
           ))}
