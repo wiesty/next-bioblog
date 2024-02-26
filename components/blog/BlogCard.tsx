@@ -13,7 +13,7 @@ import {
 const BlogCard = ({ blog, config }: any) => {
   const truncateBlogDesc = !(blog.attributes.Description === null)
       ? blog.attributes.Description.substring(0, 50) + "..."
-      : "No description available";
+      : "";
 
     const imageUrl = !(blog.attributes.img.data === null)
     ? config.data.attributes.StrapiUrl + blog.attributes.img.data
