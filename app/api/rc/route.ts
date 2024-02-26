@@ -1,7 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import reloadCache from "@/lib/reloadcache";
 
-export async function GET(request: { headers: { get: (arg0: string) => any; }; }) {
+export async function GET(request: NextRequest) {
     const apiKey = request.headers.get('Authorization');
     if (apiKey !== process.env.CACHE_API_KEY) {
         return new NextResponse("not authorized", { status: 403 });
@@ -9,5 +9,5 @@ export async function GET(request: { headers: { get: (arg0: string) => any; }; }
 
     const result = await reloadCache();
 
-    return new NextResponse(result, { status: 200 });
+    return new NextResponse("Cache has been reloaded!", { status: 200 });
 }
