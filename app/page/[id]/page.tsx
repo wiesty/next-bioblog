@@ -87,7 +87,7 @@ const Page = async ({ params }: any) => {
       </div>
       <div>
         <div className="mt-8">
-          <h1 className="text-3xl font-semibold">
+          <h1 className="text-3xl font-semibold text-primary">
             {page.data.attributes.Title}
           </h1>
           <div className="mt-8 mb-8">
