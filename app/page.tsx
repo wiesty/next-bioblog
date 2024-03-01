@@ -1,23 +1,6 @@
 import Blogs from "@/components/blog/Blogs";
 import Image from "next/image";
-
-async function fetchConfig() {
-  const options = {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-    },
-    cache: "no-store",
-  };
-
-  try {
-    const res = await fetch(`${process.env.CMS_URL}/api/cmsconfig?populate=*`, {
-      ...options,
-      cache: "no-store" as RequestCache,
-    });
-    const response = await res.json();
-    return response;
-  } catch (err) {}
-}
+import { fetchConfig } from "@/lib/fetchconfig";
 
 async function fetchBlogs() {
   const headers = {
@@ -27,19 +10,14 @@ async function fetchBlogs() {
   };
 
   try {
-    const res = await fetch(
-      `${process.env.CMS_URL}/api/blogs?populate=*`,
-      {
-        ...headers,
-        next: { tags: ['collection'] }
-      }
-    );
+    const res = await fetch(`${process.env.CMS_URL}/api/blogs?populate=*`, {
+      ...headers,
+      next: { tags: ["collection"] },
+    });
     const response = await res.json();
     return response;
-  } catch (err) {
-  }
+  } catch (err) {}
 }
-
 
 export default async function Home() {
   const blogs = await fetchBlogs();

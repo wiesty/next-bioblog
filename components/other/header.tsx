@@ -4,36 +4,11 @@ import Link from "next/link";
 import Navbar from "@/components/other/navbar";
 import Image from "next/image";
 import { config } from "process";
+import { fetchConfig } from "@/lib/fetchconfig";
 
-export async function fetchConfig() {
-  const headers = {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-    },
-  };
-
-  try {
-    const [configRes] = await Promise.all([
-      fetch(`${process.env.CMS_URL}/api/cmsconfig?populate=*`, {
-        ...headers,
-        next: { tags: ['collection'] }
-      }),
-    ]);
-
-    const [configData] = await Promise.all([configRes.json()]);
-
-    return {
-      configData,
-    };
-  } catch (err) {
-    return {
-      configData: null,
-    };
-  }
-}
 
 const Header = async () => {
-  const { configData } = await fetchConfig();
+  const configData = await fetchConfig();
   return (
     <div className="relative">
       <div className="absolute inset-0 bg-shadn3"></div>

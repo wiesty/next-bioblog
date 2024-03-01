@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { fetchConfig } from "@/lib/fetchconfig";
 
 async function fetchBlogs(id: number) {
   const headers = {
@@ -42,22 +43,6 @@ async function fetchCategoryName(id: number) {
   } catch (err) {}
 }
 
-async function fetchConfig() {
-  const headers = {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-    },
-  };
-
-  try {
-    const res = await fetch(`${process.env.CMS_URL}/api/cmsconfig?populate=*`, {
-      ...headers,
-      next: { tags: ['collection'] }
-    });
-    const response = await res.json();
-    return response;
-  } catch (err) {}
-}
 
 export async function generateMetadata({ params }: any): Promise<Metadata> {
   const category = await fetchCategoryName(params.id);

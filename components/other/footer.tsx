@@ -8,49 +8,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
-export async function fetchMenu() {
-  const headers = {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-    },
-  };
-
-  try {
-    const [menuRes, configRes] = await Promise.all([
-      fetch(
-        `${process.env.CMS_URL}/api/menus/${process.env.FooterMenuId}?populate=*`,
-        {
-          ...headers,
-          next: { tags: ['collection'] }
-        }
-      ),
-      fetch(`${process.env.CMS_URL}/api/cmsconfig?populate=*`, {
-        ...headers,
-        next: { tags: ['collection'] }
-      }),
-    ]);
-
-    const [menuData, configData] = await Promise.all([
-      menuRes.json(),
-      configRes.json(),
-    ]);
-
-    return {
-      menuData,
-      configData,
-    };
-  } catch (err) {
-    console.error("Error fetching menu and config:", err);
-    return {
-      menuData: null,
-      configData: null,
-    };
-  }
-}
+import { fetchConfig } from "@/lib/fetchconfig";
+import { fetchMenu } from "@/lib/fetchmenubyid";
 
 const Footer = async () => {
-  const { menuData, configData } = await fetchMenu();
+  const { menuData } = await fetchMenu(`${process.env.FooterMenuId}`);
+  const configData = await fetchConfig();
   return (
     <div>
       <footer className="bg-shadn3 mt-8 p-4 text-white text-center">

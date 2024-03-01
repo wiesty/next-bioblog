@@ -9,41 +9,10 @@ import React from "react";
 import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
 import { NavbarClient } from "./navbarclient";
-
-export async function fetchMenu() {
-  const headers = {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-    },
-  };
-
-  try {
-    const [menuRes] = await Promise.all([
-      fetch(
-        `${process.env.CMS_URL}/api/menus/${process.env.HeaderMenuId}?populate=*`,
-        {
-          ...headers,
-          next: { tags: ['collection'] }
-        }
-      ),
-    ]);
-
-    const [menuData] = await Promise.all([menuRes.json()]);
-
-    return {
-      menuData,
-    };
-  } catch (err) {
-    console.error("Error fetching menu and config:", err);
-    return {
-      menuData: null,
-      configData: null,
-    };
-  }
-}
+import { fetchMenu } from "@/lib/fetchmenubyid";
 
 const Navbar = async () => {
-  const { menuData } = await fetchMenu();
+  const { menuData } = await fetchMenu(`${process.env.HeaderMenuId}`);
 
   return (
     <Menubar>

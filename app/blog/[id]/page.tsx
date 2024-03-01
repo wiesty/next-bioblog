@@ -6,43 +6,8 @@ import parse from "html-react-parser";
 import { Badge } from "@/components/ui/badge";
 import { Metadata } from "next";
 import { notFound } from "next/navigation"
-
-async function fetchBlog(id: number) {
-  const headers = {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-    }
-  };
-
-  try {
-    const res = await fetch(
-      `${process.env.CMS_URL}/api/blogs/${id}?populate=*`,
-      {
-        ...headers,
-        next: { tags: ['collection'] }
-      }
-    );
-    const response = await res.json();
-    return response;
-  } catch (err) {}
-}
-
-async function fetchConfig() {
-  const headers = {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-    },
-  };
-
-  try {
-    const res = await fetch(`${process.env.CMS_URL}/api/cmsconfig`, {
-      ...headers,
-      next: { tags: ['collection'] }
-    });
-    const response = await res.json();
-    return response;
-  } catch (err) {}
-}
+import { fetchConfig } from "@/lib/fetchconfig";
+import { fetchBlog } from "@/lib/fetchblogbyid";
 
 export async function generateMetadata({ params }: any): Promise<Metadata> {
   const blog = await fetchBlog(params.id);
