@@ -20,7 +20,6 @@ async function fetchBlogs({ items, term }: any) {
     .map((item: string) => `filters[${item}][$contains]=${term}`)
     .join("&[$or]");
   const url = `${process.env.CMS_URL}/api/blogs?${queryString}&populate=*`;
-  console.log(url);
   const headers = {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
@@ -42,21 +41,10 @@ const BlogPage = async ({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) => {
-  let searching = true;
-  let setSearching = true;
-  let blogs = null;
-    if (!searching) {
-      setSearching = true;
-      console.log(setSearching)
-      blogs = await fetchBlogs({
-        items: searchParams.types,
-        term: searchParams.term,
-      });
-      setTimeout(() => {
-        setSearching = false;
-        console.log(setSearching)
-      }, 5000);
-    }
+  const blogs = await fetchBlogs({
+    items: searchParams?.types,
+    term: searchParams?.term,
+  });
   return (
     <main>
       <Searchbox />
@@ -79,7 +67,7 @@ const BlogPage = async ({
                 {" "}
                 <Link href={`/blog/${blogs.id}`}>{blogs?.attributes.Title}</Link>
               </TableCell>
-              <TableCell>{blogs?.attributes.Description}</TableCell>
+              <TableCell> <Link href={`/blog/${blogs.id}`}>{blogs?.attributes.Description}</Link></TableCell>
               <TableCell className="text-right">
                 {blogs?.attributes.categories.data.map((category: any) => (
                   <React.Fragment key={category.id}>
