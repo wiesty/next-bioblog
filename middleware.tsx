@@ -11,7 +11,7 @@ export function middleware(request: NextRequest) {
   const cspHeader = `
     default-src 'self';
     script-src 'self' 'nonce-${nonce}' ${process.env.CMS_DOMAIN} 'strict-dynamic';
-    style-src 'self' 'unsafe-inline';
+    style-src 'self' 'nonce-${nonce}' ${process.env.CMS_DOMAIN};
     img-src 'self' blob: data: ${process.env.CMS_DOMAIN};
     font-src 'self';
     object-src 'none';
@@ -20,8 +20,8 @@ export function middleware(request: NextRequest) {
     frame-ancestors 'none';
     block-all-mixed-content;
     upgrade-insecure-requests;
-    require-trusted-types-for 'script';
 `
+// require-trusted-types-for 'script';
 
   const contentSecurityPolicyHeaderValue = cspHeader
     .replace(/\s{2,}/g, ' ')
