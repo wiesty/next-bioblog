@@ -15,10 +15,10 @@ const BlogCard = ({ blog, config }: any) => {
       ? blog.attributes.Description.substring(0, 50) + "..."
       : "";
 
-    const imageUrl = !(blog.attributes.img.data === null)
-    ? config.data.attributes.StrapiUrl + blog.attributes.img.data
-    : config.data.attributes.StrapiUrl +
-      config.data.attributes.DefaultBlogImage.data.attributes.url;
+    const imageUrl = blog.attributes.img && blog.attributes.img.data && blog.attributes.img.data.attributes && blog.attributes.img.data.attributes.url
+  ? config.data.attributes.StrapiUrl + blog.attributes.img.data.attributes.url
+  : config.data.attributes.StrapiUrl + config.data.attributes.DefaultBlogImage.data.attributes.url;
+
 
   return (
     <Card>

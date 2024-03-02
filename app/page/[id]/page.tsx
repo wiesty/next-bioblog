@@ -4,47 +4,9 @@ import { Metadata } from "next";
 import { FaAngleLeft } from "react-icons/fa";
 import { notFound } from "next/navigation"
 import parse from 'html-react-parser';
+import { fetchConfig } from "@/lib/fetchconfig";
+import { fetchPage } from "@/lib/fetchpagebyid";
 
-async function fetchPage(id: number) {
-  const options = {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-    },
-    cache: 'no-store',
-  };
-
-  try {
-    const res = await fetch(
-      `${process.env.CMS_URL}/api/pages/${id}?populate=*`,
-      {
-        ...options,
-        cache: 'no-store',
-      }
-    );
-    const response = await res.json();
-    return response;
-  } catch (err) {
-  }
-}
-
-
-async function fetchConfig() {
-  const options = {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-    },
-    cache: "no-store",
-  };
-
-  try {
-    const res = await fetch(`${process.env.CMS_URL}/api/cmsconfig`, {
-      ...options,
-      cache: "no-store" as RequestCache,
-    });
-    const response = await res.json();
-    return response;
-  } catch (err) {}
-}
 
 export async function generateMetadata({ params }: any): Promise<Metadata> {
   const page = await fetchPage(params.id);
@@ -87,7 +49,7 @@ const Page = async ({ params }: any) => {
       </div>
       <div>
         <div className="mt-8">
-          <h1 className="text-3xl font-semibold">
+          <h1 className="text-3xl font-semibold text-primary">
             {page.data.attributes.Title}
           </h1>
           <div className="mt-8 mb-8">
