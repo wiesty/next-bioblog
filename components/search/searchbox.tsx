@@ -66,8 +66,6 @@ export function Searchbox() {
     const searchParams = formattedData.items
       .map((item) => `types=${item}`)
       .join("&");
-    
-      console.log(searchParams)
     const queryString = `term=${formattedData.searchstring}`;
     router.push(`/search/?${searchParams}&${queryString}`);
   }
