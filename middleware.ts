@@ -1,11 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
  
+
+// style-src 'self' 'nonce-${nonce}' ${process.env.CMS_DOMAIN};
+
+// currently bypassing nonce support on inline style objects because
+// it's not supported by the current version of the ui framework.
+
 export function middleware(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
   const cspHeader = `
     default-src 'self';
     script-src 'self' 'nonce-${nonce}' ${process.env.CMS_DOMAIN} 'strict-dynamic';
-    style-src 'self' 'nonce-${nonce}' ${process.env.CMS_DOMAIN};
+    style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data: ${process.env.CMS_DOMAIN};
     font-src 'self';
     object-src 'none';
