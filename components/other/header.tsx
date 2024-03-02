@@ -5,9 +5,11 @@ import Navbar from "@/components/other/navbar";
 import Image from "next/image";
 import { config } from "process";
 import { fetchConfig } from "@/lib/fetchconfig";
+import { headers } from 'next/headers'
 
 
 const Header = async () => {
+  const nonce = headers().get('x-nonce')
   const configData = await fetchConfig();
   return (
     <div className="relative">
@@ -22,6 +24,7 @@ const Header = async () => {
             width={96}
             height={96}
             alt="avatar"
+            nonce={nonce ?? ""}
             src={`${process.env.CMS_URL}${configData.data.attributes.BlogAvatar.data.attributes.url}`}
           />
           <h1 className="text-2xl font-semibold text-primary mt-4">

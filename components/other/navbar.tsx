@@ -10,15 +10,16 @@ import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
 import { NavbarClient } from "./navbarclient";
 import { fetchMenu } from "@/lib/fetchmenubyid";
+import { headers } from 'next/headers'
 
 const Navbar = async () => {
   const { menuData } = await fetchMenu(`${process.env.HeaderMenuId}`);
-
+const nonce = headers().get('x-nonce')
   return (
-    <Menubar>
+    <Menubar nonce={nonce ?? ""}>
       <MenubarMenu>
         <MenubarTrigger>site menu</MenubarTrigger>
-        <MenubarContent>
+        <MenubarContent nonce={nonce ?? ""}>
           {menuData.data.attributes.items.data.map((menuItem: any) => (
             <React.Fragment key={menuItem.id}>
               <Link href={menuItem.attributes.url}>
@@ -30,7 +31,7 @@ const Navbar = async () => {
       </MenubarMenu>
       <MenubarMenu>
         <MenubarTrigger>socials</MenubarTrigger>
-        <MenubarContent>
+        <MenubarContent nonce={nonce ?? ""}>
           <Link href="https://github.com/wiesty" target="_blank">
             <MenubarItem>
               <FaGithub className="mr-3" /> Github

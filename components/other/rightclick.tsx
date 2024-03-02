@@ -1,4 +1,4 @@
-"use server";
+'use server'
 import React from "react";
 import {
     ContextMenu,
@@ -13,6 +13,8 @@ import {
 
 import Link from "next/link";
 import { Share } from "@/components/other/share";
+import { headers } from 'next/headers'
+
   
 
   export async function fetchMenu() {
@@ -51,7 +53,7 @@ import { Share } from "@/components/other/share";
     children,
   }) => {
     const { menuData } = await fetchMenu();
-  
+    const nonce = headers().get('x-nonce')
     return (
     <ContextMenu>
       <ContextMenuTrigger>{children}</ContextMenuTrigger>

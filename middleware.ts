@@ -4,8 +4,8 @@ export function middleware(request: NextRequest) {
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
   const cspHeader = `
     default-src 'self';
-    script-src 'self' ${process.env.CMS_DOMAIN} 'nonce-${nonce}' 'strict-dynamic';
-    style-src 'self' ${process.env.CMS_DOMAIN} 'nonce-${nonce}';
+    script-src 'self' 'nonce-${nonce}' ${process.env.CMS_DOMAIN} 'strict-dynamic';
+    style-src 'self' 'nonce-${nonce}' ${process.env.CMS_DOMAIN};
     img-src 'self' blob: data: ${process.env.CMS_DOMAIN};
     font-src 'self';
     object-src 'none';
@@ -16,7 +16,7 @@ export function middleware(request: NextRequest) {
     upgrade-insecure-requests;
     require-trusted-types-for 'script';
 `
-  // Replace newline characters and spaces
+
   const contentSecurityPolicyHeaderValue = cspHeader
     .replace(/\s{2,}/g, ' ')
     .trim()

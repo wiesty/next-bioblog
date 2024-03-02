@@ -7,6 +7,7 @@ import Footer from "@/components/other/footer";
 import Header from "@/components/other/header";
 import Maintenance from "@/components/other/maintenance";
 import RightClick from "@/components/other/rightclick";
+import { headers } from 'next/headers'
 
 const rubik = Rubik({ subsets: ["latin"] });
 
@@ -48,6 +49,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const nonce = headers().get('x-nonce')
   return (
     <html lang="de">
       <head>
@@ -62,6 +64,7 @@ export default function RootLayout({
           attribute="class"
           defaultTheme="dark"
           disableTransitionOnChange
+          nonce={nonce ?? ""}
         >
           <Maintenance>
             <RightClick>
