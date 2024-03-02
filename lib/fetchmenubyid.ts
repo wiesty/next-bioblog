@@ -1,3 +1,5 @@
+import next from "next";
+
 export async function fetchMenu(id: string) {
   const headers = {
     headers: {

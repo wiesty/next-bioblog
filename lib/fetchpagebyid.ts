@@ -1,17 +1,16 @@
 export async function fetchPage(id: number) {
-  const options = {
+  const headers = {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
     },
-    cache: "no-store",
   };
 
   try {
     const res = await fetch(
       `${process.env.CMS_URL}/api/pages/${id}?populate=*`,
       {
-        ...options,
-        cache: "no-store",
+        ...headers,
+        next: { tags: ["collection"] },
       }
     );
     const response = await res.json();
