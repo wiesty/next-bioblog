@@ -12,7 +12,7 @@ import { fetchConfig } from "@/lib/fetchconfig";
 import { fetchMenu } from "@/lib/fetchmenubyid";
 
 const Footer = async () => {
-  const { menuData } = await fetchMenu(`${process.env.FooterMenuId}`);
+  const { menuData } = await fetchMenu(parseInt(`${process.env.FooterMenuId}`));
   const configData = await fetchConfig();
   return (
     <div>
