@@ -1,5 +1,3 @@
-import next from "next";
-
 export async function fetchConfig() {
   const headers = {
     headers: {
@@ -11,6 +9,7 @@ export async function fetchConfig() {
     const res = await fetch(`${process.env.CMS_URL}/api/cmsconfig?populate=*`, {
       ...headers,
       next: { tags: ["collection"] },
+      cache: 'force-cache',
     });
     const response = await res.json();
     return response;

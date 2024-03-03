@@ -14,45 +14,12 @@ import {
 import Link from "next/link";
 import { Share } from "@/components/other/share";
 import { headers } from 'next/headers'
-
-  
-
-  export async function fetchMenu() {
-    const headers = {
-      headers: {
-        Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-      },
-    };
-  
-    try {
-      const [menuRes] = await Promise.all([
-        fetch(
-          `${process.env.CMS_URL}/api/menus/${process.env.HeaderMenuId}?populate=*`,
-          {
-            ...headers,
-            next: { tags: ['collection'] }
-          }
-        ),
-      ]);
-  
-      const [menuData] = await Promise.all([menuRes.json()]);
-  
-      return {
-        menuData,
-      };
-    } catch (err) {
-      console.error("Error fetching menu and config:", err);
-      return {
-        menuData: null,
-        configData: null,
-      };
-    }
-  }
+import { fetchMenu } from "@/lib/fetchmenubyid";
 
   const RightClick: React.FC<{ children: React.ReactNode }> = async ({
     children,
   }) => {
-    const { menuData } = await fetchMenu();
+    const { menuData } = await fetchMenu(parseInt(`${process.env.HeaderMenuId}`));
     const nonce = headers().get('x-nonce')
     return (
     <ContextMenu>

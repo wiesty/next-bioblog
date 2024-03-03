@@ -1,6 +1,8 @@
-import next from "next";
+import { cache } from 'react'
 
-export async function fetchMenu(id: string) {
+export const revalidate = 3600
+
+export const fetchMenu = cache(async (id: number) => {
   const headers = {
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
@@ -13,7 +15,7 @@ export async function fetchMenu(id: string) {
         `${process.env.CMS_URL}/api/menus/${id}?populate=*`,
         {
           ...headers,
-          next: { tags: ["collection"] },
+          cache: 'force-cache',
         }
       ),
     ]);
@@ -29,4 +31,4 @@ export async function fetchMenu(id: string) {
       menuData: null,
     };
   }
-}
+})

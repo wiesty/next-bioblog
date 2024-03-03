@@ -8,25 +8,9 @@ import Header from "@/components/other/header";
 import Maintenance from "@/components/other/maintenance";
 import RightClick from "@/components/other/rightclick";
 import { headers } from 'next/headers'
+import { fetchConfig } from "@/lib/fetchconfig";
 
 const rubik = Rubik({ subsets: ["latin"] });
-
-async function fetchConfig() {
-  const headers = {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-    },
-  };
-
-  try {
-    const res = await fetch(`${process.env.CMS_URL}/api/cmsconfig`, {
-      ...headers,
-      next: { tags: ["collection"] },
-    });
-    const response = await res.json();
-    return response;
-  } catch (err) {}
-}
 
 export async function generateMetadata({ params }: any): Promise<Metadata> {
   const config = await fetchConfig();

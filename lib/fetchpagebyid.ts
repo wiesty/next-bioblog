@@ -11,6 +11,7 @@ export async function fetchPage(id: number) {
       {
         ...headers,
         next: { tags: ["collection"] },
+        cache: 'force-cache',
       }
     );
     const response = await res.json();

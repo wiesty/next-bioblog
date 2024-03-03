@@ -13,7 +13,7 @@ import { fetchMenu } from "@/lib/fetchmenubyid";
 import { headers } from 'next/headers'
 
 const Navbar = async () => {
-  const { menuData } = await fetchMenu(`${process.env.HeaderMenuId}`);
+  const { menuData } = await fetchMenu(parseInt(`${process.env.HeaderMenuId}`));
 const nonce = headers().get('x-nonce')
   return (
     <Menubar nonce={nonce ?? ""}>

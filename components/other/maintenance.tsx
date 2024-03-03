@@ -1,26 +1,10 @@
 import React from "react";
-
-async function getMaintenanceStatus() {
-  const headers = {
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
-    },
-  };
-
-  try {
-    const res = await fetch(`${process.env.CMS_URL}/api/cmsconfig`, {
-      ...headers,
-      next: { tags: ['collection'] }
-    });
-    const response = await res.json();
-    return response;
-  } catch (err) {}
-}
+import { fetchConfig } from "@/lib/fetchconfig";
 
 const Maintenance: React.FC<{ children: React.ReactNode }> = async ({
   children,
 }) => {
-  const result = await getMaintenanceStatus();
+  const result = await fetchConfig();
 
   if (result.data.attributes.BlogEnabled) {
     return <>{children}</>;
